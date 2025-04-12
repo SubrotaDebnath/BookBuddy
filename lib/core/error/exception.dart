@@ -1,6 +1,7 @@
 // class UnauthorizedException implements Exception {}
 //
 // class BadRequestException implements Exception {}
+ class ConnectionTimeoutException implements Exception {}
 
 class ServerException implements Exception {}
 

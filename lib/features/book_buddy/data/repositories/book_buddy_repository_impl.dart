@@ -36,6 +36,9 @@ class BookBuddyRepositoryImpl extends BookBuddyRepository {
         ),
       );
     }
+    on ConnectionTimeoutException{
+      return Left( ConnectionFailure(message:"The connection has timed out"));
+    }
     // on UnauthorizedException {
     //   return Left(
     //     UnauthorizedFailure(

@@ -17,7 +17,6 @@ class BookBuddyRemoteDataSourceImpl extends BookBuddyRemoteDataSource {
 
   @override
   Future<BooksModel> getBooks({required BooksParams booksParams}) async {
-
     final response = await client.get(
       ApiEndpoints.getBooks(
         queryParam: booksParams.queryParam,
@@ -28,12 +27,12 @@ class BookBuddyRemoteDataSourceImpl extends BookBuddyRemoteDataSource {
         'Accept': 'application/json',
         // 'Authorization': 'Bearer $token',
       },
-    );
+    ).timeout(Duration(seconds: 5),onTimeout: (){
+      return http.Response('Error timeout', 408);
 
-    // print(response.body);
-
+    });
+    
     if (response.statusCode == 200) {
-      // print(response.body);
       return BooksModel.fromJson(json.decode(response.body));
     }
     // else if (response.statusCode == 401) {
@@ -44,6 +43,9 @@ class BookBuddyRemoteDataSourceImpl extends BookBuddyRemoteDataSource {
     // else if (response.statusCode == 500) {
     //   throw ServerException();
     // }
+    else if(response.statusCode == 408){
+      throw ConnectionTimeoutException();
+    }
     else if (response.statusCode == 503) {
       throw ServiceUnavailableException();
     } else if (response.statusCode == 504) {
