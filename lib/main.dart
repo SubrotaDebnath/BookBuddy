@@ -1,20 +1,23 @@
+import 'package:book_buddy/app.dart';
+import 'package:book_buddy/core/db/book_buddy_db.dart';
 import 'package:flutter/material.dart';
+import 'package:book_buddy/core/di/injection_container.dart' as di;
 
-void main() {
-  runApp(const MyApp());
+initializeLocalDB() async {
+  await di.sl<BookDatabase>().initHive();
+  // WidgetsFlutterBinding.ensureInitialized();
+
+  // await BookDatabase().initHive();
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // Service Locator initialization
+  await di.init();
+  // Database Initialization
+  // await initializeLocalDB();
+  await di.sl<BookDatabase>().initHive();
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'BookBuddy',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: Placeholder(),
-    );
-  }
+
+  runApp(const App());
 }
