@@ -13,8 +13,6 @@ class BookDatabase {
     Hive.registerAdapter(ImageLinksAdapter());
 
     bookBox = await Hive.openBox<Book>('booksBox');
-    print('Hive initialized and box opened!');
-
   }
 
   Future<void> insertBook(BookModel book) async {

@@ -46,7 +46,6 @@ class BookBuddyBloc extends Bloc<BookBuddyEvent, BookBuddyState> {
 
     result.fold(
       (l) {
-        print(l.message);
         switch (l) {
           case ConnectionFailure connectionerror:
             return emit(BookBuddyInternetConnectionError(message: l.message));

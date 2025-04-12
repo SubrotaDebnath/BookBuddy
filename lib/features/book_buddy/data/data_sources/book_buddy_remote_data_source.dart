@@ -17,9 +17,7 @@ class BookBuddyRemoteDataSourceImpl extends BookBuddyRemoteDataSource {
 
   @override
   Future<BooksModel> getBooks({required BooksParams booksParams}) async {
-    print(
-      'Epi end point: ${ApiEndpoints.getBooks(queryParam: booksParams.queryParam, startIndex: booksParams.startIndex)}',
-    );
+
     final response = await client.get(
       ApiEndpoints.getBooks(
         queryParam: booksParams.queryParam,
@@ -36,7 +34,6 @@ class BookBuddyRemoteDataSourceImpl extends BookBuddyRemoteDataSource {
 
     if (response.statusCode == 200) {
       // print(response.body);
-      print(response.statusCode);
       return BooksModel.fromJson(json.decode(response.body));
     }
     // else if (response.statusCode == 401) {
